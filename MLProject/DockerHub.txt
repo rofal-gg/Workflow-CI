@@ -1,0 +1,19 @@
+Tautan Docker Hub - Kriteria 3 Advance
+========================================
+
+Docker Image: https://hub.docker.com/r/achsony/diabetes-risk-model
+
+Image ini otomatis dibuild & di-push oleh GitHub Actions (lihat
+.github/workflows/ci.yml) menggunakan `mlflow models build-docker`
+setiap kali ada push ke folder MLProject/.
+
+Cara pull & jalankan manual (untuk kriteria 4):
+  docker pull achsony/diabetes-risk-model:latest
+  docker run -p 8080:8080 achsony/diabetes-risk-model:latest
+
+Setup yang perlu dilakukan di GitHub repo Workflow-CI:
+1. Buka Settings > Secrets and variables > Actions.
+2. Tambahkan secret:
+     DOCKERHUB_USERNAME = achsony
+     DOCKERHUB_TOKEN     = <access token dari hub.docker.com/settings/security>
+3. Push repo ini ke GitHub, workflow akan berjalan otomatis.
