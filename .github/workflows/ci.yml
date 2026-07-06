@@ -1,4 +1,3 @@
-cat > .github/workflows/ci.yml << 'EOF'
 name: ML Workflow CI
 
 on:
