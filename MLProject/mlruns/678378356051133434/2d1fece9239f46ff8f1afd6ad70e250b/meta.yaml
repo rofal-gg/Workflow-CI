@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/MLProject/mlruns/678378356051133434/2d1fece9239f46ff8f1afd6ad70e250b/artifacts
+end_time: 1783376506630
+entry_point_name: ''
+experiment_id: '678378356051133434'
+lifecycle_stage: active
+run_id: 2d1fece9239f46ff8f1afd6ad70e250b
+run_name: clumsy-grouse-463
+run_uuid: 2d1fece9239f46ff8f1afd6ad70e250b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1783376495289
+status: 3
+tags: []
+user_id: runner
