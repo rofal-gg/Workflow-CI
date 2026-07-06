@@ -8,6 +8,7 @@ sehingga menerima parameter melalui argparse (bukan hardcode) agar CI-friendly.
 
 import argparse
 import os
+import joblib
 import pandas as pd
 import mlflow
 import mlflow.sklearn
@@ -61,6 +62,11 @@ def main():
         # Simpan juga model ke folder lokal agar mudah diambil job CI berikutnya
         os.makedirs("model_output", exist_ok=True)
         mlflow.sklearn.save_model(model, "model_output/model")
+
+        # Simpan juga sebagai .joblib (dipakai oleh Dockerfile custom, lebih ringan
+        # dan tidak bergantung pada mekanisme docker-build bawaan mlflow yang
+        # kadang bermasalah karena isu eksternal conda/pyenv)
+        joblib.dump(model, "model_output/model.joblib")
 
 
 if __name__ == "__main__":
