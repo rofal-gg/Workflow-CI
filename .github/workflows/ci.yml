@@ -76,7 +76,8 @@ jobs:
         run: |
           mlflow models build-docker \
             --model-uri "runs:/${RUN_ID}/model" \
-            --name "${{ secrets.DOCKERHUB_USERNAME }}/${IMAGE_NAME}:latest"
+            --name "${{ secrets.DOCKERHUB_USERNAME }}/${IMAGE_NAME}:latest" \
+            --env-manager conda
 
       - name: Push Docker image to Docker Hub
         run: |
