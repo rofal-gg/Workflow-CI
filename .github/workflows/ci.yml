@@ -59,7 +59,7 @@ jobs:
             MLProject/mlruns
             MLProject/model_output
 
-      - name: Commit mlruns back to repository
+      - name: Commit mlruns to Eksperimen repository
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
@@ -69,11 +69,17 @@ jobs:
           fi
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:${GH_PAT}@github.com/rofal-gg/Eksperimen_SML_Muhammad-Ainur-Rofal-Achsony.git"
+          # Clone target repo using PAT
+          git clone "https://x-access-token:${GH_PAT}@github.com/rofal-gg/Eksperimen_SML_Muhammad-Ainur-Rofal-Achsony.git" target-repo
+          # Copy artifacts
+          cp -r MLProject/mlruns target-repo/MLProject/mlruns 2>/dev/null || true
+          cp -r MLProject/model_output target-repo/MLProject/model_output 2>/dev/null || true
+          # Commit and push
+          cd target-repo
           git add MLProject/mlruns MLProject/model_output || true
           if ! git diff --staged --quiet; then
             git commit -m "chore: update MLflow run artifacts [CI]"
-            git push origin HEAD:main
+            git push origin main
           else
             echo "Nothing to commit, skipping push"
           fi
