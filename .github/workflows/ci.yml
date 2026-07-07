@@ -60,13 +60,23 @@ jobs:
             MLProject/model_output
 
       - name: Commit mlruns back to repository
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
+          if [ -z "$GH_PAT" ]; then
+            echo "::error::GH_PAT secret is not set!"
+            exit 1
+          fi
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/rofal-gg/Eksperimen_SML_Muhammad-Ainur-Rofal-Achsony.git
+          git remote set-url origin "https://x-access-token:${GH_PAT}@github.com/rofal-gg/Eksperimen_SML_Muhammad-Ainur-Rofal-Achsony.git"
           git add MLProject/mlruns MLProject/model_output || true
-          git diff --staged --quiet || git commit -m "chore: update MLflow run artifacts [CI]"
-          git push origin HEAD:main
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update MLflow run artifacts [CI]"
+            git push origin HEAD:main
+          else
+            echo "Nothing to commit, skipping push"
+          fi
 
       # --- Advance: build & push Docker image ke Docker Hub (Dockerfile custom) ---
       - name: Copy model & scaler for Docker build context
