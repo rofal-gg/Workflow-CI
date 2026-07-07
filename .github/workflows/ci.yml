@@ -71,9 +71,10 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           # Clone target repo using PAT
           git clone "https://x-access-token:${GH_PAT}@github.com/rofal-gg/Eksperimen_SML_Muhammad-Ainur-Rofal-Achsony.git" target-repo
-          # Copy artifacts
-          cp -r MLProject/mlruns target-repo/MLProject/mlruns 2>/dev/null || true
-          cp -r MLProject/model_output target-repo/MLProject/model_output 2>/dev/null || true
+          # Ensure target directories exist and copy artifacts
+          mkdir -p target-repo/MLProject/mlruns target-repo/MLProject/model_output
+          cp -r MLProject/mlruns/* target-repo/MLProject/mlruns/ 2>/dev/null || true
+          cp -r MLProject/model_output/* target-repo/MLProject/model_output/ 2>/dev/null || true
           # Commit and push
           cd target-repo
           git add MLProject/mlruns MLProject/model_output || true
