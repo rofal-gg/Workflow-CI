@@ -61,6 +61,9 @@ def main():
 
         # Simpan juga model ke folder lokal agar mudah diambil job CI berikutnya
         os.makedirs("model_output", exist_ok=True)
+        import shutil
+        if os.path.exists("model_output/model"):
+            shutil.rmtree("model_output/model")
         mlflow.sklearn.save_model(model, "model_output/model")
 
         # Simpan juga sebagai .joblib (dipakai oleh Dockerfile custom, lebih ringan
